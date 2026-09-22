@@ -12,6 +12,7 @@ class CommissionGuard(gl.Contract):
     resolution_summary: str
     winner: str
     resolution_reason: str
+    project_created: bool
 
     def __init__(self):
         self.client = Address("0x0000000000000000000000000000000000000000")
@@ -24,12 +25,16 @@ class CommissionGuard(gl.Contract):
         self.resolution_summary = ""
         self.winner = ""
         self.resolution_reason = ""
+        self.project_created = False
 
     @gl.public.write
     def create_project(self, artist: str, requirements: str):
+        assert not self.project_created, "Project already exists"
+        assert self.project_created == False, "Project already exists"
         self.client = gl.message.sender_address
         self.artist = artist
         self.requirements = requirements
+        self.project_created = True
         self.submission = ""
         self.status = "CREATED"
         self.decision = ""
@@ -37,6 +42,7 @@ class CommissionGuard(gl.Contract):
         self.resolution_summary= ""
         self.winner = ""
         self.resolution_reason = ""
+        self.project_created = True
 
     @gl.public.write
     def submit_work(self, submission: str) -> None:
@@ -182,3 +188,14 @@ class CommissionGuard(gl.Contract):
         return self.resolution_reason
 
         
+        
+    
+         
+
+            
+        
+            
+
+        
+        
+         
